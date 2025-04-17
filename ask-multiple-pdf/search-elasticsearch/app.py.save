@@ -1,0 +1,45 @@
+from flask import Flask, request, jsonify
+from elasticsearch import Elasticsearch
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+app = Flask(__name__)
+model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+es = Elasticsearch(['http://10.1.1.159:9200'])
+
+@app.route('/search-similar', methods=['POST'])
+def search_similar():
+    data = request.json
+    query_text = data.get('text')
+
+    if not query_text:
+        return jsonify({"error": "Missing text in request"}), 400
+
+    # Vykonanie embeddingu na zadanom texte
+    query_embedding = model.encode([query_text], convert_to_tensor=True)
+    query_embedding_list = query_embedding.numpy().flatten().tolist()
+
+    # Vyhľadávanie v Elasticsearch na základe podobnosti embeddingov
+    response = es.search(index="documents", body={
+        "query": {
+            "script_score": {
+                "query": {"match_all": {}},
+                "script": {
+                    "source": "cosineSimilarity(params.query_vector, 'embedding') + 1.0",
+                    "params": {"query_vector": query_embedding_list}
+                }
+            }
+        },
+	"_source": ["text"],
+	
+    })
+
+    # print(response)
+    # Získanie a vrátenie najpodobnejších záznamov
+    hits = response['hits']['hits']
+    results = [{"text": hit["_source"]["text"], "file_name": hit["_source"].get("{fields:{metadata.name.keyword}}", "No file name"), "score": hit["_score"]} for hit in hits]
+
+    return jsonify(results)
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5001)

@@ -1,0 +1,11 @@
+Flask
+elasticsearch
+pymupdf  # Required for fitz (PyMuPDF)
+langchain
+langchain-community
+transformers
+torch
+sentence-transformers==2.2.2  # Locking version to prevent breaking changes
+InstructorEmbedding==1.0.1
+huggingface_hub==0.15.1
+requests

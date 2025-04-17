@@ -1,0 +1,188 @@
+openapi: 3.0.0
+info:
+  title: Language, Text Processing, and Similarity Search API
+  description: API for detecting language, summarizing texts, and searching for similar records.
+  version: 1.0.0
+servers:
+  - url: http://nginx-proxy
+  - url: http://10.1.1.129:88
+  
+paths:
+  /detect-language:
+    post:
+      summary: Detect Language
+      description: Returns the language code of the given text.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  example: Toto je testovací text, pre ktorý chceme zistiť jazyk.
+      responses:
+        '200':
+          description: Language code successfully returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  language:
+                    type: string
+                    example: sk
+        '400':
+          description: Invalid request format.
+  /summarize:
+    post:
+      summary: Summarize Text
+      description: Returns a summary of the given long text.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  example: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      responses:
+        '200':
+          description: Text successfully summarized.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  summary:
+                    type: string
+                    example: Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+        '400':
+          description: Invalid request format.
+  /search-similar:
+    post:
+      summary: Search for Similar Records
+      description: Searches for records similar to the provided text.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  example: Váš text pre vyhľadávanie
+      responses:
+        '200':
+          description: Found similar records successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        document:
+                          type: string
+                        score:
+                          type: number
+                    example:
+                      - document: "Example similar document 1"
+                        score: 1.2
+                      - document: "Example similar document 2"
+                        score: 0.9
+        '400':
+          description: Invalid request format.
+  /embed-and-save:
+    post:
+      summary: Embed Text and Save
+      description: Embeds the given text and saves it with the page number.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+                - page_number
+              properties:
+                text:
+                  type: string
+                  description: Text to be embedded.
+                  example: Váš text pre embedovanie
+                page_number:
+                  type: integer
+                  description: Page number of the document.
+                  example: 1
+      responses:
+        '200':
+          description: Text and page number successfully embedded and saved.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Text successfully embedded and saved.
+        '400':
+          description: Invalid request format.
+  /extract-text:
+    post:
+      summary: Extract Text from PDF File
+      description: Extracts text from the uploaded PDF file.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF file to be processed.
+      responses:
+        '200':
+          description: Text successfully extracted from the PDF file.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Extracted text from the PDF file.
+        '400':
+          description: Invalid request format or issue with the PDF file.
+  /process-pdf:
+    post:
+      summary: Extract Text from PDF File and create embed and store in to database
+      description: Extracts text from the uploaded PDF file.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF file to be processed.
+      responses:
+        '200':
+          description: Text successfully extracted from the PDF file.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Extracted text from the PDF file.
+        '400':
+          description: Invalid request format or issue with the PDF file.
+

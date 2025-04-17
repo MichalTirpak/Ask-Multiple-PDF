@@ -1,0 +1,23 @@
+version: '3.8'
+
+networks:
+  pdf-app-network:
+    external: true  # Indicates that the network already exists
+
+services:
+  flask-app:
+    build:
+      context: .  # Use the current directory as the build context
+      dockerfile: Dockerfile  # Specify the Dockerfile
+    container_name: extract-and-embed
+    image: extract-and-embed
+    ports:
+      - "5004:5004"  # Map port 5004 on the host to port 5004 in the container
+    environment:
+      FLASK_APP: app.py  # Set environment variable for Flask
+      FLASK_RUN_PORT: 5004  # Set Flask run port
+    volumes:
+      - .:/app  # Mount the current directory to the container for development (optional)
+    restart: always  # Ensure the container restarts if it crashes
+    networks:
+      - pdf-app-network  # Connect this service to the pdf-app-network

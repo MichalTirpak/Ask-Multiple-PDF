@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: summarize
+    container_name: summarize
+    ports:
+      - "5003:5003"
+    volumes:
+      - .:/app
+    environment:
+      - TRANSFORMERS_CACHE=/app/transformers_cache
+    networks:
+      - pdf-app-network
+
+networks:
+  pdf-app-network:
+    external: true

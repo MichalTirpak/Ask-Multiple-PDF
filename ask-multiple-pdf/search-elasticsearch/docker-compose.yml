@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: search-similar
+    container_name: search-similar
+    ports:
+      - "5002:5002"
+    volumes:
+      - .:/app
+    environment:
+      - TRANSFORMERS_CACHE=/app/transformers_cache
+    networks:
+      - pdf-app-network
+
+networks:
+  pdf-app-network:
+    external: true

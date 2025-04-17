@@ -1,0 +1,14 @@
+version: '3.8'
+services: 
+  nginx-proxy:
+    build: .
+    container_name: nginx-proxy
+    networks:
+      - pdf-app-network
+    ports:
+      - "88:80"
+    restart: unless-stopped
+
+networks:
+  pdf-app-network:
+    external: true
