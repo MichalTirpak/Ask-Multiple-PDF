@@ -22,6 +22,7 @@ Tento projekt predstavuje webovú aplikáciu, ktorá umožňuje používateľovi
 
 Každú mikroslužbu spusti osobitne pomocou Docker Compose:
 
+```bash
 cd extract-and-embed
 docker-compose up --build -d
 
