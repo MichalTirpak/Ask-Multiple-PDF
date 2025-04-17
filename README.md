@@ -39,7 +39,7 @@ docker-compose up --build -d
 cd ../proxy
 docker-compose up --build -d
 ```
-2. Spustenie frontendu
+### 2. Spustenie frontendu
 
 Frontend (v priečinku PDF) sa spúšťa manuálne cez npm:
 ```
@@ -49,7 +49,7 @@ npm start
 ```
 Frontend sa spustí na http://localhost:3000
 Backendové služby sú prístupné cez reverzné proxy na http://localhost:88.
-📄 Dokumentácia
+### 📄 Dokumentácia
 
 Podrobný popis fungovania aplikácie nájdeš v diplomovej práci, najmä v kapitolách:
 
@@ -57,7 +57,7 @@ Podrobný popis fungovania aplikácie nájdeš v diplomovej práci, najmä v kap
 
     3.8 Celkový priebeh fungovania aplikácie
 
-🧠 Funkcionalita v skratke
+### 🧠 Funkcionalita v skratke
 
     Používateľ nahraje PDF súbor cez frontend.
 
@@ -71,7 +71,7 @@ Podrobný popis fungovania aplikácie nájdeš v diplomovej práci, najmä v kap
 
     Výstup sa zobrazí vo webovej aplikácii.
 
-✍️ Autor
+### ✍️ Autor
 
 Bc. Michal Tirpák
 Technická univerzita v Košiciach
