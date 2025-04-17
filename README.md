@@ -13,16 +13,20 @@ Tento projekt predstavuje webovú aplikáciu, ktorá umožňuje používateľovi
 
 ## 🗂️ Štruktúra projektu
 
-/ ├── PDF/ # Frontend aplikácia (React) ├── extract-and-embed/ # Extrakcia textu z PDF a generovanie embeddingov ├── search-elasticsearch/ # Vyhľadávanie v Elasticsearch pomocou embeddingov ├── summarize-text/ # Sumarizácia výsledkov pomocou NLP modelu ├── proxy/ # Konfigurácia reverzného proxy (NGINX) ├── docker-compose.yml # Orchestrace služieb pomocou Docker Compose └── README.md # Tento súbor
-
-
-## 🚀 Spustenie projektu
+/
+├── PDF/                 → Frontend aplikácia (React)
+├── ask-multiple-pdf/
+    ├── extract-and-embed/  → Extrakcia textu z PDF a generovanie embeddingov
+    ├── search-elasticsearch/ → Vyhľadávanie v Elasticsearch pomocou embeddingov
+    ├── summarize-text/     → Sumarizácia výsledkov pomocou NLP modelu
+    ├── proxy/              → Konfigurácia reverzného proxy (NGINX)
+    ├── swagger/  → Jednoduchá vygenerovaná dokumentácia
 
 ### 1. Spustenie backendových služieb
 
 Každú mikroslužbu spusti osobitne pomocou Docker Compose:
 
-```bash
+```
 cd extract-and-embed
 docker-compose up --build -d
 
@@ -34,15 +38,15 @@ docker-compose up --build -d
 
 cd ../proxy
 docker-compose up --build -d
-
+```
 2. Spustenie frontendu
 
 Frontend (v priečinku PDF) sa spúšťa manuálne cez npm:
-
+```
 cd PDF
 npm install
 npm start
-
+```
 Frontend sa spustí na http://localhost:3000
 Backendové služby sú prístupné cez reverzné proxy na http://localhost:88.
 📄 Dokumentácia
