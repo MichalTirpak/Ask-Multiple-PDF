@@ -12,7 +12,7 @@ Tento projekt predstavuje webovú aplikáciu, ktorá umožňuje používateľovi
 - **NGINX** – reverzné proxy smerovanie medzi službami
 
 ## 🗂️ Štruktúra projektu
-
+```
 /
 ├── PDF/                 → Frontend aplikácia (React)
 ├── ask-multiple-pdf/
@@ -21,7 +21,7 @@ Tento projekt predstavuje webovú aplikáciu, ktorá umožňuje používateľovi
     ├── summarize-text/     → Sumarizácia výsledkov pomocou NLP modelu
     ├── proxy/              → Konfigurácia reverzného proxy (NGINX)
     ├── swagger/  → Jednoduchá vygenerovaná dokumentácia
-
+```
 ### 1. Spustenie backendových služieb
 
 Každú mikroslužbu spusti osobitne pomocou Docker Compose:
